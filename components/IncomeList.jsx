@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { getIncome, deleteIncome } from "@/lib/apiClient"
 import { useAuth } from "@/lib/context"
 
 export default function IncomeList({ refresh }) {
@@ -11,11 +12,8 @@ export default function IncomeList({ refresh }) {
   useEffect(() => {
     const fetchIncome = async () => {
       try {
-        const res = await fetch("/api/income", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        const data = await res.json()
-        setIncome(data.data || [])
+        const { data } = await getIncome()
+        setIncome(data || [])
       } catch (error) {
         console.error("Error fetching income:", error)
       } finally {
@@ -32,10 +30,7 @@ export default function IncomeList({ refresh }) {
     if (!confirm("Are you sure?")) return
 
     try {
-      await fetch(`/api/income/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      await deleteIncome(id)
       setIncome(income.filter((item) => item._id !== id))
     } catch (error) {
       console.error("Error deleting income:", error)

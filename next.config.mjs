@@ -1,11 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
-  },
+export default {
+  turbopack: {
+    root: 'C:/Users/Dell/Downloads/v0-budget-planner-app-main/v0-budget-planner-app-main'
+  }
 }
-
-export default nextConfig

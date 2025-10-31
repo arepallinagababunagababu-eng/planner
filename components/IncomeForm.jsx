@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useAuth } from "@/lib/context"
+import { createIncome } from "@/lib/apiClient"
 
 export default function IncomeForm({ onSuccess }) {
   const [formData, setFormData] = useState({
@@ -13,7 +13,6 @@ export default function IncomeForm({ onSuccess }) {
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
-  const { token } = useAuth()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -26,19 +25,7 @@ export default function IncomeForm({ onSuccess }) {
     setLoading(true)
 
     try {
-      const res = await fetch("/api/income", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      })
-
-      if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error)
-      }
+      await createIncome(formData)
 
       setFormData({
         source: "",

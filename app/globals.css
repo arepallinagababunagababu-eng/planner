@@ -182,11 +182,7 @@ body {
 
 
 @layer base {
-  * {
-    @apply border-solid;
-  }
-  
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground bg-background;
   }
 }
